@@ -45,6 +45,6 @@ export default [
         country: "SAR",
         googleMapsLink: "https://maps.app.goo.gl/5MrozegYJzsGfieg7",
         dates: "10 Jul, 2024 - 26 Jul, 2024",
-        text: "Hong Kong is a vibrant city known for its impressive skyline, bustling harbor, and rich cultural heritage."
+        text: "Hong Kong is a dazzling metropolis where towering glass skyscrapers meet lush green hillsides and a sparkling harbour. It blends modern sophistication with deep cultural traditions."
     },
 ]
