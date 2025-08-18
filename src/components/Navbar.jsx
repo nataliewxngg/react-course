@@ -1,9 +1,11 @@
+import reactLogo from "/src/assets/react.svg";
+
 function Navbar() {
     return (
         <header className="h-[90px] bg-[#21222a] py-[30px] px-[25px]">
             <nav className="flex h-full items-center">
                 <img 
-                    src="./src/assets/react.svg" 
+                    src={reactLogo} 
                     alt="React Logo"
                     className="mr-[7px] w-[40px]"
                 />

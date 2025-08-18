@@ -1,6 +1,6 @@
 function Main() {
     return (
-        <main className="px-[25px] bg-[url('./src/assets/react-logo-half.png')] bg-no-repeat bg-bottom-right bg-[size:120px]">
+        <main className="px-[25px] bg-[url('/react-logo-half.png')] bg-no-repeat bg-bottom-right bg-[size:120px]">
             <h1 className="text-[2.4rem] font-bold py-[30px]">Fun facts about React</h1>
             <ul className="list-disc pl-10 text-1 max-w-[400px] [&>li::marker]:text-[#61dafb] [&>li::marker]:text-[1.5rem] [&>li]:leading-[19px] [&>li]:py-[10px]">
                 <li>Was first released in 2013</li>
