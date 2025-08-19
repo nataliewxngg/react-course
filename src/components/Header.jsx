@@ -1,10 +1,12 @@
-import globe from "/src/assets/globe.png"
+import chefClaudeIcon from "/src/assets/chef-claude-icon.png"
 
 function Header() {
     return (
-        <header className="bg-[#f45b5a] text-white flex justify-center gap-[8px] p-[10px] text-[0.9rem] flex-wrap">
-            <img src={globe} alt="Globe Logo" className="w-[24px]"/>
-            <span>my travel journal.</span>
+        <header className="flex justify-center items-center gap-[10px] flex-wrap
+            shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10),0px_1px_2px_0px_rgba(0,0,0,0.06)] p-4 rounded-lg
+            py-[16px] px-[8px]">
+            <img src={chefClaudeIcon} alt="Chef Claude Icon" className="w-[30px]"/>
+            <span className="text-[1.3rem]">Chef Claude</span>
         </header>
     )
 }
