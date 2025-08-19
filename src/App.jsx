@@ -6,12 +6,14 @@ import travelData from "./data/data"
 function App() {
   const travelEntries = travelData.map(location => 
     <Entry 
-      img={location.img}
-      title={location.title}
-      country={location.country}
-      googleMapsLink={location.googleMapsLink}
-      dates={location.dates}
-      text={location.text}
+      key={location.id}
+      // img={location.img}
+      // title={location.title}
+      // country={location.country}
+      // googleMapsLink={location.googleMapsLink}
+      // dates={location.dates}
+      // text={location.text}
+      {...location}
     />
   )
 
