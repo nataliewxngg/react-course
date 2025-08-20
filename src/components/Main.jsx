@@ -9,10 +9,7 @@ export default function Main() {
         <li key={ingredient}>{ingredient}</li>
     )
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
+    function addIngredient(formData) {
         const newIngredient = formData.get("ingredient").trim();
         
         // Add ingredient to array of ingredients
@@ -21,7 +18,7 @@ export default function Main() {
 
     return (
         <main className="pb-[10px] pt-[30px] px-[30px]">
-            <form onSubmit={handleSubmit} className="flex justify-center gap-[12px] h-[38px]">
+            <form action={addIngredient} className="flex justify-center gap-[12px] h-[38px]">
                 <input
                     type="text"
                     placeholder="e.g. tomato"
