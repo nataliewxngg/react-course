@@ -10,7 +10,7 @@ function IngredientsList(props) {
             <ul className="mb-[30px] list-disc pl-5 text-[#475467] text-[0.9rem] leading-8" aria-live="polite">{ingredientsListItems}</ul>
 
             {props.ingredients.length > 3 && <div className="bg-[#f0efeb] rounded-lg flex p-[20px] justify-between items-center">
-                <div>
+                <div ref={props.ref}>
                     <h3 className="text-[0.9rem] font-medium">Ready for a recipe?</h3>
                     <p className="text-[0.7rem] font-normal text-[#6b7280]">Generate a recipe from your list of ingredients.</p>
                 </div>

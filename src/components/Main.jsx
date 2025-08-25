@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
 // import { getRecipeFromMistral } from "../data/ai";
@@ -22,6 +22,14 @@ export default function Main() {
         setRecipeShown(prev => !prev);
     }
 
+    // for Scroll into view
+    const recipeSection = useRef(null);
+    useEffect(() => {
+        if (recipeShown && recipeSection.current) {
+            recipeSection.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [recipeShown]);
+
     return (
         <main className="pb-[10px] pt-[30px] px-[30px]">
             <form action={addIngredient} className="flex justify-center gap-[12px] h-[38px] mb-[20px]">
@@ -43,7 +51,7 @@ export default function Main() {
                 >Add ingredient</button>
             </form>
 
-            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} toggleRecipe={toggleRecipe}/>}
+            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} toggleRecipe={toggleRecipe} ref={recipeSection} />}
 
             {/* pasted recipe placeholder code */}
             {recipeShown && <ClaudeRecipe />}
