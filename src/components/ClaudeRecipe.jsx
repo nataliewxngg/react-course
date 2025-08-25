@@ -1,7 +1,9 @@
+import ReactMarkdown from 'react-markdown';
+
 function ClaudeRecipe(props) {
     return (
-        <section>
-            {props.recipe}
+        <section id="recipe" className="my-8">
+            <ReactMarkdown>{props.recipe}</ReactMarkdown>
         </section>
     );
 }

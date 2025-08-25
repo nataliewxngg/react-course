@@ -9,8 +9,8 @@ function IngredientsList(props) {
             <h2 className="text-[1.3rem] font-semibold leading-13">Ingredients on hand:</h2>
             <ul className="mb-[30px] list-disc pl-5 text-[#475467] text-[0.9rem] leading-8" aria-live="polite">{ingredientsListItems}</ul>
 
-            {props.ingredients.length > 3 && <div className="bg-[#f0efeb] rounded-lg flex p-[20px] justify-between items-center">
-                <div ref={props.ref}>
+            {props.ingredients.length > 3 && <div className="bg-[#f0efeb] rounded-lg flex p-[20px] justify-between items-center" ref={props.ref}>
+                <div>
                     <h3 className="text-[0.9rem] font-medium">Ready for a recipe?</h3>
                     <p className="text-[0.7rem] font-normal text-[#6b7280]">Generate a recipe from your list of ingredients.</p>
                 </div>

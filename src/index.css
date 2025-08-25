@@ -3,3 +3,17 @@
 body {
     font-family: Inter, sans-serif;
 }
+
+#recipe h1, h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 2;
+}
+
+#recipe h1 { margin-bottom: 10px; }
+
+#recipe h4 { font-weight: 600; }
+
+#recipe>ul { list-style: disc; margin-bottom: 15px; }
+#recipe ul li, #recipe ol li { margin-left: 30px; }
+#recipe ol { list-style: decimal; margin-bottom: 15px;}

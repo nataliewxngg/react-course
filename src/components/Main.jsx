@@ -16,11 +16,12 @@ export default function Main() {
             newIngredient.charAt(0).toUpperCase() + newIngredient.slice(1)])        
     }
 
-    // Recipe shown state
+    // Recipe
     const [recipe, setRecipe] = useState("");
     async function getRecipe() {
+        console.log("getting recipe!")
         const recipeMarkdown = await getAIRecipe(ingredients);
-        console.log(recipeMarkdown);
+        setRecipe(recipeMarkdown);
     }
 
     // for Scroll into view
@@ -30,16 +31,6 @@ export default function Main() {
             recipeSection.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [recipe]);
-    
-    useEffect(() => {
-        async function fetchRecipe() {
-            console.log("fetching")
-            ingredients.length > 3 ? setRecipe(await getAIRecipe(ingredients)) : setRecipe(null);
-        }
-        fetchRecipe();
-    }, [ingredients]);
-
-    console.log("AIRecipe:", recipe);
 
     return (
         <main className="pb-[10px] pt-[30px] px-[30px]">
@@ -62,10 +53,10 @@ export default function Main() {
                 >Add ingredient</button>
             </form>
 
-            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} toggleRecipe={getRecipe} ref={recipeSection} />}
+            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} getRecipe={getRecipe} ref={recipeSection} />}
 
             {/* pasted recipe placeholder code */}
-            {recipe && <ClaudeRecipe recipe={ recipe} />}
+            {recipe && <ClaudeRecipe recipe={ recipe } />}
         </main>
     )
 }
