@@ -14,7 +14,7 @@ function IngredientsList(props) {
                     <h3 className="text-[0.9rem] font-medium">Ready for a recipe?</h3>
                     <p className="text-[0.7rem] font-normal text-[#6b7280]">Generate a recipe from your list of ingredients.</p>
                 </div>
-                <button className="bg-[#d17557] text-[#fafaf8] text-[0.7rem] px-[17px] py-[7px] rounded-md shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] cursor-pointer" onClick={props.toggleRecipe}>Get a recipe</button>
+                <button className="bg-[#d17557] text-[#fafaf8] text-[0.7rem] px-[17px] py-[7px] rounded-md shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] cursor-pointer" onClick={props.getRecipe}>Get a recipe</button>
             </div>}
 
         </section>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
-// import { getRecipeFromMistral } from "../data/ai";
+import { getAIRecipe } from '../data/ai'
 
 export default function Main() {
     
@@ -17,18 +17,29 @@ export default function Main() {
     }
 
     // Recipe shown state
-    const [recipeShown, setRecipeShown] = useState(false);
-    async function toggleRecipe() {
-        setRecipeShown(prev => !prev);
+    const [recipe, setRecipe] = useState("");
+    async function getRecipe() {
+        const recipeMarkdown = await getAIRecipe(ingredients);
+        console.log(recipeMarkdown);
     }
 
     // for Scroll into view
     const recipeSection = useRef(null);
     useEffect(() => {
-        if (recipeShown && recipeSection.current) {
+        if (recipe && recipeSection.current) {
             recipeSection.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [recipeShown]);
+    }, [recipe]);
+    
+    useEffect(() => {
+        async function fetchRecipe() {
+            console.log("fetching")
+            ingredients.length > 3 ? setRecipe(await getAIRecipe(ingredients)) : setRecipe(null);
+        }
+        fetchRecipe();
+    }, [ingredients]);
+
+    console.log("AIRecipe:", recipe);
 
     return (
         <main className="pb-[10px] pt-[30px] px-[30px]">
@@ -51,10 +62,10 @@ export default function Main() {
                 >Add ingredient</button>
             </form>
 
-            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} toggleRecipe={toggleRecipe} ref={recipeSection} />}
+            {ingredients.length > 0 && <IngredientsList ingredients={ingredients} toggleRecipe={getRecipe} ref={recipeSection} />}
 
             {/* pasted recipe placeholder code */}
-            {recipeShown && <ClaudeRecipe />}
+            {recipe && <ClaudeRecipe recipe={ recipe} />}
         </main>
     )
 }
