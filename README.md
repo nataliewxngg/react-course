@@ -7,7 +7,7 @@ Projects include:
 - 💡 **ReactFacts project:** static webpage developed to preliminarily "think like a react developer" — imperative vs. declarative, custom components, common Tailwind CSS utility classes<br>
 - ✈️ **Travel Journal:** static webpage that leverages props and reusable components to showcase past trips
 - 🤖 **[Chef Claude:](https://nataliewxngg-chef-claude.netlify.app/)** web application powered by [OpenAI's gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) that recommends recipes based on a list of available ingredients inputted by the user — driven by conditional rendering, states, refs, and secure api integration through netlify deployment
-- 😂 **Meme Generator:** dynamic webpage built upon [Imgflip API](https://imgflip.com/api) generate and customize memes
+- 😂 **Meme Generator:** dynamic webpage built upon [Imgflip API](https://imgflip.com/api) to generate and customize memes
 
 ## Contents covered in this Course
 
