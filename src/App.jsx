@@ -1,13 +1,8 @@
-import Header from "./components/Header"
-import Main from "./components/Main"
-
 function App() {
 
   return (
-    <>
-      <Header />
-      <Main /> 
-    </>
+    <main className="bg-[#f5f5f5] w-80 h-80 rounded-[10px]">
+    </main>
   )
 }
 
