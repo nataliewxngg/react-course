@@ -19,9 +19,11 @@ export default function Main() {
     // Recipe
     const [recipe, setRecipe] = useState("");
     async function getRecipe() {
+        setLoading(true);
         console.log("getting recipe!")
         const recipeMarkdown = await getAIRecipe(ingredients);
         setRecipe(recipeMarkdown);
+        setLoading(false);
     }
 
     // for Scroll into view
@@ -31,6 +33,10 @@ export default function Main() {
             recipeSection.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [recipe]);
+
+    // Loading state
+    const [loading, setLoading] = useState(false);
+    console.log(loading);
 
     return (
         <main className="pb-[10px] pt-[30px] px-[30px]">
@@ -56,7 +62,7 @@ export default function Main() {
             {ingredients.length > 0 && <IngredientsList ingredients={ingredients} getRecipe={getRecipe} ref={recipeSection} />}
 
             {/* pasted recipe placeholder code */}
-            {recipe && <ClaudeRecipe recipe={ recipe } />}
+            {recipe && <ClaudeRecipe recipe={recipe} loading={loading} />}
         </main>
     )
 }
