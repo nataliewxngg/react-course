@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
-import { getAIRecipe } from '../data/ai'
+import { getAIRecipe } from '../../netlify/functions/ai.js'
 
 export default function Main() {
     
