@@ -1,12 +1,18 @@
-# React + Vite
+# [Learn React (Scrimba)](https://scrimba.com/learn-react-c0e) - Bob Ziroll
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a collection of projects I built while learning React with Vite and Tailwind CSS.
 
-Currently, two official plugins are available:
+Projects include:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 💡 **ReactFacts project:** static webpage developed to preliminarily "think like a react developer" — imperative vs. declarative, custom components, common Tailwind CSS utility classes<br>
+- ✈️ **Travel Journal:** static webpage that leverages props and reusable components to showcase past trips
+- 🤖 **[Chef Claude:](https://nataliewxngg-chef-claude.netlify.app/)** web application powered by [OpenAI's gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) that recommends recipes based on a list of available ingredients inputted by the user — driven by conditional rendering, states, refs, and secure api integration through netlify deployment
+- 😂 **Meme Generator:** dynamic webpage built upon [Imgflip API](https://imgflip.com/api) generate and customize memes
 
-## Expanding the ESLint configuration
+## Contents covered in this Course
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Imperative vs. declarative programming
+2. React props, states, and refs
+3. Default and controlled forms in React
+4. API integrations and how to safely deploy web apps containing them
+5. AI prompt engineering for web applications
