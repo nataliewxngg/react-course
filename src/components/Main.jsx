@@ -62,7 +62,7 @@ export default function Main() {
             {ingredients.length > 0 && <IngredientsList ingredients={ingredients} getRecipe={getRecipe} ref={recipeSection} />}
 
             {/* pasted recipe placeholder code */}
-            {recipe && <ClaudeRecipe recipe={recipe} loading={loading} />}
+            <ClaudeRecipe recipe={recipe} loading={loading} />
         </main>
     )
 }
