@@ -30,14 +30,40 @@ function App() {
     )
   }
 
-  function rollDice() { setAllDice(generateAllNewDice()); }
+  function rollDice() {
+    setAllDice(prev => {
+      return prev.map(die => {
+        return die.isHeld 
+          ? die 
+          : {
+            ...die,
+            value: Math.floor(Math.random() * 6) + 1
+          }
+      })
+    }); 
+  }
 
   const hold = (id) => {
-    console.log(id);
+    setAllDice(prev => {
+      return prev.map(die => {
+        if (die.id === id) {
+          return {
+            ...die,
+            isHeld: !die.isHeld
+          }
+        }
+        return die
+      })
+    })
   }
 
   return (
     <main className="bg-[#f5f5f5] w-full h-full max-h-100 max-w-100 rounded-[10px] flex flex-col items-center justify-center gap-8 py-10">
+      <header className="text-center px-10">
+        <h1 className="text-3xl font-bold">Tenzies</h1>
+        <p className="leading-5 pt-1">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+      </header>
+
       <div id="dice-container">
         {allDiceMapped()}
       </div>
