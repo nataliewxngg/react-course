@@ -1,6 +1,8 @@
 import Die from "./components/Die"
 import { useState } from "react"
 import { nanoid } from "nanoid"
+import { useWindowSize } from 'react-use'
+import Confetti from 'react-confetti'
 
 function App() {
 
@@ -57,8 +59,23 @@ function App() {
     })
   }
 
+  // Game won logic
+  const gameWon = () => {
+    const firstValue = allDice[0].value;
+    for (let i = 1; i < allDice.length; ++i) {
+      if (allDice[i].value !== firstValue || !allDice[i].isHeld) return false;
+    }
+    return true;
+  }
+  console.log(gameWon());
+
+  // for confetti effect
+  const {width, height} = useWindowSize()
+
   return (
     <main className="bg-[#f5f5f5] w-full h-full max-h-100 max-w-100 rounded-[10px] flex flex-col items-center justify-center gap-8 py-10">
+      {gameWon() && <Confetti width={width} height={height}/>}
+
       <header className="text-center px-10">
         <h1 className="text-3xl font-bold">Tenzies</h1>
         <p className="leading-5 pt-1">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
@@ -68,8 +85,8 @@ function App() {
         {allDiceMapped()}
       </div>
 
-      <button className="text-white bg-[#5035ff] w-30 h-12 rounded-sm font-bold text-[1.3rem]
-        shadow-[0px_3.2px_7.68px_0px_#0000002E] cursor-pointer" onClick={rollDice}>Roll</button>
+      <button className="text-white bg-[#5035ff] px-8 py-2 rounded-sm font-bold text-[1.3rem]
+        shadow-[0px_3.2px_7.68px_0px_#0000002E] cursor-pointer" onClick={rollDice}>{gameWon() ? "New Game" : "Roll"}</button>
     </main>
   )
 }
