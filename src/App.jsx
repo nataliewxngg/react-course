@@ -85,7 +85,7 @@ function App() {
   }, [gameWon()])
 
   return (
-    <main className="bg-[#f5f5f5] w-full h-full max-h-100 max-w-100 rounded-[10px] flex flex-col items-center justify-center gap-8 py-10">
+    <main className="bg-[#f5f5f5] w-full h-full max-h-100 max-w-100 rounded-[10px] flex flex-col items-center justify-end gap-8 py-10">
       {gameWon() && <Confetti width={width} height={height}/>}
       <div aria-live="polite">
         {gameWon() && <p className="sr-only">Congratulations! You won the game!</p>}
