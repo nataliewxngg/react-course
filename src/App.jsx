@@ -1,9 +1,11 @@
 import Headline from "./components/Headline";
 import Language from "./components/Language";
+import Letter from "./components/Letter"
 import { useState } from "react";
 
 function App() {
 
+  // Languages
   const [languages, setLanguages] = useState([
     { name: "HTML", color: "#e2680f", eliminated: false, textCol: "#f9f4da" },
     { name: "CSS", color: "#328af1", eliminated: false, textCol: "#f9f4da" },
@@ -28,11 +30,28 @@ function App() {
     ))
   }
 
+  // Letters
+  const [letters, setLetters] = useState([
+    { id: 1, text: "A" },
+    { id: 2, text: "B" },
+    { id: 3, text: "C" }, 
+  ])
+
+  function mappedLetters() {
+    return letters.map(letter => (
+      <Letter key={letter.id} text={letter.text} />
+    ))
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
       <Headline />
       <div className="flex w-[253.5px] gap-[1.5px] flex-wrap justify-center">
         {mappedLanguages()}
+      </div>
+
+      <div className="flex gap-0.5 flex-wrap justify-center">
+        {mappedLetters()}
       </div>
     </main>
   )
