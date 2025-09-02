@@ -72,7 +72,7 @@ function App() {
         {mappedLetters()}
       </div>
 
-      <div className="flex gap-3 flex-wrap w-120">
+      <div className="flex gap-1.5 flex-wrap justify-center w-120">
         {mappedKeyboard()}
       </div>
     </main>
