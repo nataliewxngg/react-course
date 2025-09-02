@@ -32,17 +32,37 @@ function App() {
   }
 
   // Letters
-  const [letters, setLetters] = useState([
-    { id: 1, text: "A" },
-    { id: 2, text: "B" },
-    { id: 3, text: "C" }, 
-  ])
+  const [letters, setLetters] = useState([]);
+  const [word, setWord] = useState(null);
 
   function mappedLetters() {
     return letters.map(letter => (
-      <Letter key={letter.id} text={letter.text} />
+      <Letter key={letter.id} text={letter.status==="known" ? letter.text : ""} />
     ))
   }
+
+    // Random word
+  const didFetch = useRef(false);
+
+  useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    const newLetters = [];    
+    const randomWord = fetch("https://random-word-api.herokuapp.com/word");
+    randomWord.then(res => res.json())
+      .then(data => {
+        console.log(data[0]);
+        setWord(data[0]);
+        for (let i = 0; i < data[0].length; ++i) {
+          newLetters.push({ id: i + 1, text: data[0][i].toUpperCase(), status: "unknown" })
+        }
+        setLetters(newLetters);
+      });
+    return () => {
+      setLetters([]);
+    }
+  }, []);
 
   // Keyboard
   const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -56,31 +76,31 @@ function App() {
 
   function mappedKeyboard() {
     return keyboard.map(kbKey => (
-      <KbKey key={kbKey.id} text={kbKey.text} status={kbKey.status} />
+      <KbKey
+        key={kbKey.id}
+        text={kbKey.text}
+        status={kbKey.status}
+        onClick={() => handleClick(kbKey)}
+      />
     ))
   }
 
-  // Random word
-  const didFetch = useRef(false);
-
-  useEffect(() => {
-    if (didFetch.current) return;
-    didFetch.current = true;
-    
-    const randomWord = fetch("https://random-word-api.herokuapp.com/word");
-    randomWord.then(res => res.json())
-      .then(data => {
-        console.log(data[0])
-        const newLetters = [];
-        for (let i = 0; i < data[0].length; ++i) {
-          newLetters.push({ id: i + 1, text: data[0][i].toUpperCase() })
+  function handleClick(kbKey) {
+    setKeyboard(prevKeyboard => {
+      const newKeyboard = [];
+      prevKeyboard.map(key => {
+        if (key.id === kbKey.id) {
+          word.toUpperCase().includes(key.text)
+            ? newKeyboard.push({ id: key.id, text: key.text, status: "correct" })
+            : newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
+        } 
+        else {
+          newKeyboard.push(key);
         }
-        setLetters(newLetters);
-      });
-    return () => {
-      setLetters([]);
-    }
-  }, []);
+      })
+      return newKeyboard;
+    });
+  }
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
