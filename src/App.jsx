@@ -1,6 +1,7 @@
 import Headline from "./components/Headline";
 import Language from "./components/Language";
 import Letter from "./components/Letter"
+import KbKey from "./components/KbKey";
 import { useState } from "react";
 
 function App() {
@@ -43,15 +44,36 @@ function App() {
     ))
   }
 
+  // Keyboard
+  const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+  const [keyboard, setKeyboard] = useState(() => {
+    const arr = [];  
+    for (let i = 0; i < alphabet.length; ++i) {
+      arr.push({ id: i + 1, text: alphabet[i], status: "unused" })
+    }
+    return arr;
+  });
+
+  function mappedKeyboard() {
+    return keyboard.map(kbKey => (
+      <KbKey key={kbKey.id} text={kbKey.text} status={kbKey.status} />
+    ))
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
       <Headline />
+
       <div className="flex w-[253.5px] gap-[1.5px] flex-wrap justify-center">
         {mappedLanguages()}
       </div>
 
       <div className="flex gap-0.5 flex-wrap justify-center">
         {mappedLetters()}
+      </div>
+
+      <div className="flex gap-3 flex-wrap w-120">
+        {mappedKeyboard()}
       </div>
     </main>
   )
