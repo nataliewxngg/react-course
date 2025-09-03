@@ -41,7 +41,7 @@ function App() {
     ))
   }
 
-    // Random word
+  // Random word
   const didFetch = useRef(false);
 
   useEffect(() => {
@@ -90,10 +90,22 @@ function App() {
       const newKeyboard = [];
       prevKeyboard.map(key => {
         if (key.id === kbKey.id) {
-          word.toUpperCase().includes(key.text)
-            ? newKeyboard.push({ id: key.id, text: key.text, status: "correct" })
-            : newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
-        } 
+          if (word.toUpperCase().includes(key.text)) {
+            // Update keyboard state
+            newKeyboard.push({ id: key.id, text: key.text, status: "correct" });
+
+            // Update letters state
+            setLetters(prevLetters => {
+              const newLetters = [];
+              prevLetters.map(letter => {
+                letter.text === key.text ? newLetters.push({ ...letter, status: "known" }) : newLetters.push(letter);
+              })
+              return newLetters;
+            })
+          } else {
+            newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
+          }
+        }
         else {
           newKeyboard.push(key);
         }
