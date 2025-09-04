@@ -18,6 +18,7 @@ function App() {
     { name: "Ruby", color: "#d02b2b", eliminated: false, textCol: "#f9f4da" },
     { name: "Assembly", color: "#2d519f", eliminated: false, textCol: "#f9f4da" }
   ]);
+  const [wrongGuessCount, setWrongGuessCount] = useState(0);
 
   function mappedLanguages() {
     return languages.map(lang => (
@@ -86,6 +87,7 @@ function App() {
   }
 
   function handleClick(kbKey) {
+    console.log("hi")
     setKeyboard(prevKeyboard => {
       const newKeyboard = [];
       prevKeyboard.map(key => {
@@ -104,6 +106,18 @@ function App() {
             })
           } else {
             newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
+
+            // Update languages state
+            setLanguages(prevLanguages => {
+              const newLanguages = [...prevLanguages];
+              newLanguages[wrongGuessCount].eliminated = true;
+              return newLanguages;
+            })
+
+            setWrongGuessCount(prevCount => {
+              console.log("incremented")
+              return prevCount + 1
+            });
           }
         }
         else {
