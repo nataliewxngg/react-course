@@ -5,7 +5,6 @@ import KbKey from "./components/KbKey";
 import { useState, useEffect, useRef } from "react";
 
 function App() {
-
   // Languages
   const [languages, setLanguages] = useState([
     { name: "HTML", color: "#e2680f", eliminated: false, textCol: "#f9f4da" },
@@ -87,15 +86,15 @@ function App() {
   }
 
   function handleClick(kbKey) {
-    console.log("hi")
+    let correctGuess = word.toUpperCase().includes(kbKey.text);
+    console.log(correctGuess);
+
     setKeyboard(prevKeyboard => {
       const newKeyboard = [];
       prevKeyboard.map(key => {
         if (key.id === kbKey.id) {
           if (word.toUpperCase().includes(key.text)) {
-            // Update keyboard state
             newKeyboard.push({ id: key.id, text: key.text, status: "correct" });
-
             // Update letters state
             setLetters(prevLetters => {
               const newLetters = [];
@@ -106,26 +105,22 @@ function App() {
             })
           } else {
             newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
-
-            // Update languages state
-            setLanguages(prevLanguages => {
-              const newLanguages = [...prevLanguages];
-              newLanguages[wrongGuessCount].eliminated = true;
-              return newLanguages;
-            })
-
-            setWrongGuessCount(prevCount => {
-              console.log("incremented")
-              return prevCount + 1
-            });
           }
         }
-        else {
-          newKeyboard.push(key);
-        }
+        else newKeyboard.push(key);
       })
       return newKeyboard;
     });
+
+    if (!correctGuess) {
+      // Update languages state
+      setLanguages(prevLanguages => {
+        const newLanguages = [...prevLanguages];
+        newLanguages[wrongGuessCount].eliminated = true;
+        return newLanguages;
+      })
+      setWrongGuessCount(prevCount => prevCount + 1);
+    }
   }
 
   return (
