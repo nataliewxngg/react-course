@@ -49,7 +49,7 @@ function App() {
     didFetch.current = true;
 
     const newLetters = [];    
-    const randomWord = fetch("https://random-word-api.herokuapp.com/word");
+    const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
     randomWord.then(res => res.json())
       .then(data => {
         console.log(data[0]);
