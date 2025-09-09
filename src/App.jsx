@@ -5,6 +5,9 @@ import KbKey from "./components/KbKey";
 import { useState, useEffect, useRef } from "react";
 
 function App() {
+  // Game state
+  const [gameState, setGameState] = useState("playing");
+
   // Languages
   const [languages, setLanguages] = useState([
     { name: "HTML", color: "#e2680f", eliminated: false, textCol: "#f9f4da" },
@@ -101,6 +104,7 @@ function App() {
               prevLetters.map(letter => {
                 letter.text === key.text ? newLetters.push({ ...letter, status: "known" }) : newLetters.push(letter);
               })
+              if (newLetters.every(letter => letter.status === "known")) setGameState("won");
               return newLetters;
             })
           } else {
@@ -121,11 +125,14 @@ function App() {
       })
       setWrongGuessCount(prevCount => prevCount + 1);
     }
+    if (wrongGuessCount === languages.length - 2) setGameState("lost");
+
+    console.log(gameState);
   }
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
-      <Headline />
+      <Headline gameState={gameState} />
 
       <div className="flex w-[253.5px] gap-[1.5px] flex-wrap justify-center">
         {mappedLanguages()}

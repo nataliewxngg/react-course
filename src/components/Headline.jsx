@@ -1,4 +1,22 @@
-export default function Headline() {
+export default function Headline(props) {
+    let noticeDesc, noticeHeader = null;
+    if (props.gameState === "won") {
+        noticeHeader = "You Win!"
+        noticeDesc = "Well done!"
+    } else if (props.gameState === "lost") {
+        noticeHeader = "Game Over!"
+        noticeDesc = "You lose! Better start learning Assembly 😭"
+    } else 
+        noticeDesc = "Notice description here"
+    
+    let styles = {};
+    if (props.gameState === "won")
+        styles = { backgroundColor: "#10a95b" }
+    else if (props.gameState === "lost")
+        styles = { backgroundColor: "#ba2a2a" }
+    else
+        styles = { backgroundColor: "#7a5ea7" }
+
     return (
         <section className="w-[352px] h-[144px] text-center">
             <header>
@@ -6,8 +24,9 @@ export default function Headline() {
                 <p className="text-[#8e8e8e] text-[14px] font-medium">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
 
-            <div className="bg-[#7a5ea7] h-[59px] flex justify-center items-center mt-[20px]"> {/* background-color should be dynamic - pass in props*/}
-                <p className="text-[#f9f4da] text-[16px]">Place notice text here</p>
+            <div className="h-[59px] flex flex-col justify-center items-center mt-[20px] text-[#f9f4da] rounded-sm" style={styles}> {/* background-color should be dynamic - pass in props*/}
+                {props.gameState!="playing" && <p className="text-[20px]">{noticeHeader}</p>}
+                <p className="text-[16px]">{noticeDesc}</p>
             </div>
         </section>
     )
