@@ -40,7 +40,7 @@ function App() {
 
   function mappedLetters() {
     return letters.map(letter => (
-      <Letter key={letter.id} text={letter.status==="known" ? letter.text : ""} />
+      <Letter key={letter.id} text={letter.status==="unknown" ? "" : letter.text} status={letter.status} />
     ))
   }
 
@@ -125,9 +125,13 @@ function App() {
       })
       setWrongGuessCount(prevCount => prevCount + 1);
     }
-    if (wrongGuessCount === languages.length - 2) setGameState("lost");
-
-    console.log(gameState);
+    if (wrongGuessCount === languages.length - 2) {
+      setGameState("lost");
+      setLetters(prevLetters => prevLetters.map(letter => (
+        letter.status === "unknown" ? { ...letter, status: "revealed"} : letter
+      )));
+      console.log(letters);
+    }
   }
 
   return (
