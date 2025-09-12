@@ -79,7 +79,7 @@ function App() {
   }
 
   // Letters
-  const [letters, setLetters] = useState(() => fetchWord());
+  const [letters, setLetters] = useState([]);
   const [word, setWord] = useState(null);
 
   function mappedLetters() {
