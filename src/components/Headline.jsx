@@ -2,7 +2,7 @@ export default function Headline(props) {
     let noticeDesc, noticeHeader = null;
     if (props.gameState === "won") {
         noticeHeader = "You Win!"
-        noticeDesc = "Well done!"
+        noticeDesc = "Well done! 🎉"
     } else if (props.gameState === "lost") {
         noticeHeader = "Game Over!"
         noticeDesc = "You lose! Better start learning Assembly 😭"

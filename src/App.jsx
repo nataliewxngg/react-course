@@ -5,8 +5,52 @@ import KbKey from "./components/KbKey";
 import { useState, useEffect, useRef } from "react";
 
 function App() {
-  // Game state
+  // Game state ("playing", "won", "lost")
   const [gameState, setGameState] = useState("playing");
+
+  function newGame() { // Start a new game after "new Game" button is clicked
+    setGameState("playing");
+    setLanguages(prevLanguages => { // Reset eliminated languages
+      return prevLanguages.map(lang => ({ ...lang, eliminated: false }));
+    })
+    setWrongGuessCount(0);
+    setKeyboard(prevKeyboard => { // Reset keyboard
+      return prevKeyboard.map(key => ({ ...key, status: "unused" })); 
+    })
+    setLetters(() => { // Fetch new word and reset letters
+      const newLetters = [];
+      const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
+      randomWord.then(res => res.json())
+        .then(data => {
+          console.log(data[0]);
+          setWord(data[0]);
+          for (let i = 0; i < data[0].length; ++i) 
+            newLetters.push({ id: i + 1, text: data[0][i].toUpperCase(), status: "unknown" })
+        });
+      return newLetters;
+    });
+  }
+
+  // Fetch a random word from API on first render
+  const didFetch = useRef(false);
+  useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+    
+    const newLetters = [];
+    const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
+    randomWord.then(res =>
+      res.json()).then(data => {
+        console.log(data[0]);
+        setWord(data[0]);
+        for (let i = 0; i < data[0].length; ++i) {
+          newLetters.push({ id: i + 1, text: data[0][i].toUpperCase(), status: "unknown" })
+        }
+        setLetters(newLetters);
+      });
+    return () => setLetters([]);
+  }, []);
+
 
   // Languages
   const [languages, setLanguages] = useState([
@@ -35,37 +79,16 @@ function App() {
   }
 
   // Letters
-  const [letters, setLetters] = useState([]);
+  const [letters, setLetters] = useState(() => fetchWord());
   const [word, setWord] = useState(null);
+
+  console.log(letters);
 
   function mappedLetters() {
     return letters.map(letter => (
       <Letter key={letter.id} text={letter.status==="unknown" ? "" : letter.text} status={letter.status} />
     ))
   }
-
-  // Random word
-  const didFetch = useRef(false);
-
-  useEffect(() => {
-    if (didFetch.current) return;
-    didFetch.current = true;
-
-    const newLetters = [];    
-    const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
-    randomWord.then(res => res.json())
-      .then(data => {
-        console.log(data[0]);
-        setWord(data[0]);
-        for (let i = 0; i < data[0].length; ++i) {
-          newLetters.push({ id: i + 1, text: data[0][i].toUpperCase(), status: "unknown" })
-        }
-        setLetters(newLetters);
-      });
-    return () => {
-      setLetters([]);
-    }
-  }, []);
 
   // Keyboard
   const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -149,6 +172,11 @@ function App() {
       <div className="flex gap-1.5 flex-wrap justify-center w-120">
         {mappedKeyboard()}
       </div>
+
+      <button
+        className={`bg-[#11b5e5] rounded-sm border-1 border-[#d7d7d7] w-[228px] h-10 ${gameState !== "playing" ? "" : "invisible"} cursor-pointer font-semibold`}
+        onClick={newGame}
+      >New Game</button>
     </main>
   )
 }
