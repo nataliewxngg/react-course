@@ -82,8 +82,6 @@ function App() {
   const [letters, setLetters] = useState(() => fetchWord());
   const [word, setWord] = useState(null);
 
-  console.log(letters);
-
   function mappedLetters() {
     return letters.map(letter => (
       <Letter key={letter.id} text={letter.status==="unknown" ? "" : letter.text} status={letter.status} />
@@ -112,6 +110,8 @@ function App() {
   }
 
   function handleClick(kbKey) {
+    if (gameState !== "playing") return;
+
     let correctGuess = word.toUpperCase().includes(kbKey.text);
     console.log(correctGuess);
 
