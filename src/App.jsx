@@ -164,7 +164,7 @@ function App() {
         {mappedLanguages()}
       </div>
 
-      <div className="flex gap-0.5 flex-wrap justify-center">
+      <div className="flex gap-0.5 flex-wrap justify-center h-10">
         {mappedLetters()}
       </div>
 
