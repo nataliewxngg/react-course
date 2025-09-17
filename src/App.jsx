@@ -110,15 +110,14 @@ function App() {
   }
 
   function handleClick(kbKey) {
-    if (gameState !== "playing") return;
-
+    if (gameState !== "playing" || kbKey.status !== "unused") return;
     let correctGuess = word.toUpperCase().includes(kbKey.text);
     console.log(correctGuess);
 
     setKeyboard(prevKeyboard => {
       const newKeyboard = [];
       prevKeyboard.map(key => {
-        if (key.id === kbKey.id) {
+        if (key.id === kbKey.id && kbKey.status === "unused") {
           if (word.toUpperCase().includes(key.text)) {
             newKeyboard.push({ id: key.id, text: key.text, status: "correct" });
             // Update letters state
@@ -139,7 +138,7 @@ function App() {
       return newKeyboard;
     });
 
-    if (!correctGuess) {
+    if (!correctGuess && kbKey.status === "unused") {
       // Update languages state
       setLanguages(prevLanguages => {
         const newLanguages = [...prevLanguages];
