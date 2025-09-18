@@ -17,6 +17,12 @@ export default function Headline(props) {
     else
         styles = { backgroundColor: "#7a5ea7" }
 
+    function displayNotice() {
+        if (props.wrongGuess || props.gameState !== "playing") 
+            return "";
+        return "invisible";
+    }
+
     return (
         <section className="w-[352px] h-[144px] text-center">
             <header>
@@ -24,7 +30,7 @@ export default function Headline(props) {
                 <p className="text-[#8e8e8e] text-[14px] font-medium">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
 
-            <div className="h-[59px] flex flex-col justify-center items-center mt-[20px] text-[#f9f4da] rounded-sm" style={styles}> {/* background-color should be dynamic - pass in props*/}
+            <div className={`h-[59px] flex flex-col justify-center items-center mt-[20px] text-[#f9f4da] rounded-sm ${displayNotice()}`} style={styles}> {/* background-color should be dynamic - pass in props*/}
                 {props.gameState!="playing" && <p className="text-[20px]">{noticeHeader}</p>}
                 <p className="text-[16px]">{noticeDesc}</p>
             </div>

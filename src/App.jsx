@@ -65,6 +65,7 @@ function App() {
     { name: "Assembly", color: "#2d519f", eliminated: false, textCol: "#f9f4da" }
   ]);
   const [wrongGuessCount, setWrongGuessCount] = useState(0);
+  const [wrongGuess, setWrongGuess] = useState(true);
 
   function mappedLanguages() {
     return languages.map(lang => (
@@ -119,6 +120,7 @@ function App() {
       prevKeyboard.map(key => {
         if (key.id === kbKey.id && kbKey.status === "unused") {
           if (word.toUpperCase().includes(key.text)) {
+            setWrongGuess(false);
             newKeyboard.push({ id: key.id, text: key.text, status: "correct" });
             // Update letters state
             setLetters(prevLetters => {
@@ -139,6 +141,7 @@ function App() {
     });
 
     if (!correctGuess && kbKey.status === "unused") {
+      setWrongGuess(true);
       // Update languages state
       setLanguages(prevLanguages => {
         const newLanguages = [...prevLanguages];
@@ -158,7 +161,7 @@ function App() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
-      <Headline gameState={gameState} />
+      <Headline gameState={gameState} wrongGuess={wrongGuess}/>
 
       <div className="flex w-[253.5px] gap-[1.5px] flex-wrap justify-center">
         {mappedLanguages()}
