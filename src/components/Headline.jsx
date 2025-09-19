@@ -1,3 +1,5 @@
+import getFarewellText from "../utils/utils";
+
 export default function Headline(props) {
     let noticeDesc, noticeHeader = null;
     if (props.gameState === "won") {
@@ -7,7 +9,7 @@ export default function Headline(props) {
         noticeHeader = "Game Over!"
         noticeDesc = "You lose! Better start learning Assembly 😭"
     } else 
-        noticeDesc = "Notice description here"
+        noticeDesc = getFarewellText(props.removedLanguage);
     
     let styles = {};
     if (props.gameState === "won")

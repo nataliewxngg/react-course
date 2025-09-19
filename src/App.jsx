@@ -13,6 +13,7 @@ function App() {
     setLanguages(prevLanguages => { // Reset eliminated languages
       return prevLanguages.map(lang => ({ ...lang, eliminated: false }));
     })
+    setWrongGuess(false);
     setWrongGuessCount(0);
     setKeyboard(prevKeyboard => { // Reset keyboard
       return prevKeyboard.map(key => ({ ...key, status: "unused" })); 
@@ -65,7 +66,7 @@ function App() {
     { name: "Assembly", color: "#2d519f", eliminated: false, textCol: "#f9f4da" }
   ]);
   const [wrongGuessCount, setWrongGuessCount] = useState(0);
-  const [wrongGuess, setWrongGuess] = useState(true);
+  const [wrongGuess, setWrongGuess] = useState(false);
 
   function mappedLanguages() {
     return languages.map(lang => (
@@ -161,7 +162,11 @@ function App() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
-      <Headline gameState={gameState} wrongGuess={wrongGuess}/>
+      <Headline 
+        gameState={gameState} 
+        wrongGuess={wrongGuess} 
+        removedLanguage={wrongGuessCount>0 ? languages[wrongGuessCount-1].name : 0}
+      />
 
       <div className="flex w-[253.5px] gap-[1.5px] flex-wrap justify-center">
         {mappedLanguages()}
