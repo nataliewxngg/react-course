@@ -10,14 +10,13 @@ function App() {
 
   function newGame() { // Start a new game after "new Game" button is clicked
     setGameState("playing");
-    setLanguages(prevLanguages => { // Reset eliminated languages
-      return prevLanguages.map(lang => ({ ...lang, eliminated: false }));
-    })
+    setLanguages(prevLanguages =>  prevLanguages.map(lang => ({ ...lang, eliminated: false }))); // Reset languages
+
     setWrongGuess(false);
     setWrongGuessCount(0);
-    setKeyboard(prevKeyboard => { // Reset keyboard
-      return prevKeyboard.map(key => ({ ...key, status: "unused" })); 
-    })
+
+    setKeyboard(prevKeyboard => prevKeyboard.map(key => ({ ...key, status: "unused" }))); // Reset keyboard
+
     setLetters(() => { // Fetch new word and reset letters
       const newLetters = [];
       const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
@@ -42,16 +41,13 @@ function App() {
     const randomWord = fetch("https://random-word-api.vercel.app/api?words=1");
     randomWord.then(res =>
       res.json()).then(data => {
-        console.log(data[0]);
         setWord(data[0]);
-        for (let i = 0; i < data[0].length; ++i) {
+        for (let i = 0; i < data[0].length; ++i)
           newLetters.push({ id: i + 1, text: data[0][i].toUpperCase(), status: "unknown" })
-        }
         setLetters(newLetters);
       });
     return () => setLetters([]);
   }, []);
-
 
   // Languages
   const [languages, setLanguages] = useState([
@@ -92,11 +88,11 @@ function App() {
 
   // Keyboard
   const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
   const [keyboard, setKeyboard] = useState(() => {
     const arr = [];  
-    for (let i = 0; i < alphabet.length; ++i) {
+    for (let i = 0; i < alphabet.length; ++i) 
       arr.push({ id: i + 1, text: alphabet[i], status: "unused" })
-    }
     return arr;
   });
 
@@ -113,16 +109,17 @@ function App() {
 
   function handleClick(kbKey) {
     if (gameState !== "playing" || kbKey.status !== "unused") return;
+
     let correctGuess = word.toUpperCase().includes(kbKey.text);
-    console.log(correctGuess);
+    setWrongGuess(!correctGuess);
 
     setKeyboard(prevKeyboard => {
       const newKeyboard = [];
       prevKeyboard.map(key => {
-        if (key.id === kbKey.id && kbKey.status === "unused") {
+        if (key.id === kbKey.id) {
           if (word.toUpperCase().includes(key.text)) {
-            setWrongGuess(false);
-            newKeyboard.push({ id: key.id, text: key.text, status: "correct" });
+            newKeyboard.push({ id: key.id, text: key.text, status: "correct" }); // Set key status on correct guess
+
             // Update letters state
             setLetters(prevLetters => {
               const newLetters = [];
@@ -131,19 +128,18 @@ function App() {
               })
               if (newLetters.every(letter => letter.status === "known")) setGameState("won");
               return newLetters;
-            })
-          } else {
-            newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" });
-          }
+            });
+
+          } else 
+            newKeyboard.push({ id: key.id, text: key.text, status: "incorrect" }); // Set key status on incorrect guess
         }
-        else newKeyboard.push(key);
-      })
+        else newKeyboard.push(key); // Unchanged keys
+      });
+
       return newKeyboard;
     });
 
-    if (!correctGuess && kbKey.status === "unused") {
-      setWrongGuess(true);
-      // Update languages state
+    if (!correctGuess) { // Update languages state
       setLanguages(prevLanguages => {
         const newLanguages = [...prevLanguages];
         newLanguages[wrongGuessCount].eliminated = true;
@@ -151,14 +147,17 @@ function App() {
       })
       setWrongGuessCount(prevCount => prevCount + 1);
     }
-    if (wrongGuessCount === languages.length - 2) {
+  }
+
+  // Check for game over (lost)
+  useEffect(() => {
+    if (wrongGuessCount === languages.length - 1) {
       setGameState("lost");
       setLetters(prevLetters => prevLetters.map(letter => (
         letter.status === "unknown" ? { ...letter, status: "revealed"} : letter
       )));
-      console.log(letters);
     }
-  }
+  }, [languages])
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-9">
