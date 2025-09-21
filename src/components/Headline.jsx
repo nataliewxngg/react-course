@@ -32,7 +32,8 @@ export default function Headline(props) {
                 <p className="text-[#8e8e8e] text-[14px] font-medium">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </header>
 
-            <div className={`h-[59px] flex flex-col justify-center items-center mt-[20px] text-[#f9f4da] rounded-sm ${displayNotice()}`} style={styles}> {/* background-color should be dynamic - pass in props*/}
+            <div className={`h-[59px] flex flex-col justify-center items-center mt-[20px] text-[#f9f4da] rounded-sm ${displayNotice()}`} 
+                style={styles}>
                 {props.gameState!="playing" && <p className="text-[20px]">{noticeHeader}</p>}
                 <p className="text-[16px]">{noticeDesc}</p>
             </div>
